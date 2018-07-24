@@ -2,7 +2,9 @@ import urllib.request as request
 import urllib.parse
 import json
 import time
-api_key = "RGAPI-4bbbb465-6338-4889-b600-62c03c387f46"
+
+api_key = input("Wprowadź API_KEY: ")
+print(len(api_key))
 region = "eun1"
 
 
@@ -82,7 +84,7 @@ class Spectacor():
         return return_response(url)
 
 def save_to_file(stats):
-    file = open("Content2.txt", "a")
+    file = open("learn_data.data", "a")
     for i in range(len(stats)):
         if i != len(stats) - 1:
             file.write(str(stats[i]) + " ")
@@ -92,7 +94,7 @@ def save_to_file(stats):
     file.close()
 
 def read_summoners():
-    file = open("Nicki2.data", "r")
+    file = open("Nicki.data", "r")
     summoners = file.readlines()
     nicks = []
     for i in summoners:
