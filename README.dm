@@ -1,20 +1,20 @@
 NAZWA PROJEKTU: League of Legends matches predictor
 
-JÍzyk programowanie: Python
+Jƒôzyk programowanie: Python
 
 PLIKI PROJEKTU:
 
-Lol.py- Klasy obs≥ugujπce pobieranie danych z gry, pobieranie danych uczπcych,
+Lol.py- Klasy obs≈Çuguj≈°ce pobieranie danych z gry, pobieranie danych uczƒÖcych,
 	zapisywanie danych.
 
-js.py- implementacja modelu predykcyjnego...
+model.py- implementacja modelu predykcyjnego...
 
-m_predctor- Program pobierajπcy dane o graczach z aktualnej rozgrywki,przweiduje 
-	    wynik meczu (za pomocπ przetrenowanego algorytmu predykcyjnego)
+m_predctor.py- Program pobieraj≈°cy dane o graczach z aktualnej rozgrywki,przweiduje 
+	    wynik meczu (za pomoc≈° przetrenowanego algorytmu predykcyjnego)
 
-ZASTOSOWANE TECHOLOGIE / MODU£Y: 
+ZASTOSOWANE TECHOLOGIE / MODU≈ÅY: 
 
-urllib- pobieranie danych z gry w formacie danych json, z uøyciem LOL_API
+urllib- pobieranie danych z gry w formacie danych json, z u≈ºyciem LOL_API
 
-numpy, pandas, matplotlib- przetwarzanie i deklarowanie i edycja dancyh w algorymie uczπcym
+numpy, pandas, matplotlib- przetwarzanie i deklarowanie i edycja dancyh w algorymie ucz≈°cym
 
