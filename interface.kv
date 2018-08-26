@@ -1,0 +1,118 @@
+<Menu>:
+    size: root.size
+    pos:root.pos
+    canvas.before:
+        Color:
+            rgb: 0.2, 0.2, 0.2
+        Rectangle:
+            size: root.size
+            source: "Imgages/GameBox.png"
+
+    TextInput:
+        id: player_input
+        size_hint: 0.7, .09
+        pos: root.width / 2 - self.width / 2, root.height / 2.3 + check_butt.height + 10
+        color: 1, 1, 1, 1
+        background_normal: "Imgages/inp_back2.png"
+        background_active: "Imgages/inp_back2.png"
+        foreground_color: 1, 1, 1, 1
+        font_size: 30
+        multiline: False
+        padding_y: 7
+        hint_text: "Wprowadz nazwe gracza"
+        font_name: "canter\Canter Bold Shadow.otf"
+
+
+    Button:
+        id: check_butt
+        size_hint: .5, .07
+        pos:  root.width / 2 - self.width / 2, root.height / 2.3
+        text: "Oblicz"
+        font_name: "canter/Canter Bold.otf"
+        font_size: 22
+        on_press: root.start()
+
+<Loading>:
+    BoxLayout:
+        orientation: "vertical"
+        size: root.size
+        pos: root.pos
+
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: 0.05, 0.41, 1, 0.6
+                Rectangle:
+                    size: root.width, root.height / 2
+                    source: 'Imgages/team1.png'
+                    pos: self.pos
+            orientation: "vertical"
+            size: root.width, root.height / 2
+            pos: 0, root.height / 2
+            Label:
+                text: "DRUZYNA NIEBIESKA"
+                font_size: 22
+            Label:
+                id: statystyki1
+                text: "Analizuje gracza: "
+                font_size: 17
+            Label:
+                id: l1k
+                text: "Zabojstwa/min: "
+                color: 1, 1, 1, 1
+            Label:
+                id: l1d
+                text: "Zabojstwa/min: "
+                color: 1, 1, 1, 1
+            Label:
+                id: l1a
+                text: "Asysty/min: "
+                color: 1, 1, 1, 1
+            Label:
+                id: l1m
+                text: "Farma/min: "
+                color: 1, 1, 1, 1
+
+
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: 1, 0, 0, 0.6
+                Rectangle:
+                    size: root.width, root.height / 2
+                    source: 'Imgages/team1.png'
+                    pos: self.pos
+            orientation: "vertical"
+            size: root.width, root.height / 2
+            pos: 0, root.height / 2
+            Label:
+                text: "DRUZYNA CZERWONA"
+                font_size: 22
+            Label:
+                id: statystyki2
+                text: "Analizuje gracza: "
+            Label:
+                id: l2k
+                text: "Zabojstwa/min: "
+                color: 1, 1, 1, 1
+            Label:
+                id: l2d
+                text: "Smierci/min: "
+                color: 1, 1, 1, 1
+            Label:
+                id: l2a
+                text: "Asysty/min: "
+                color: 1, 1, 1, 1
+            Label:
+                id: l2m
+                text: "Farma/min: "
+                color: 1, 1, 1, 1
+    ImageButton:
+        size_hint: 0.13, 0.13
+        pos: root.width - self.width, 0
+        source: 'menu.png'
+        on_press: root.back()
+
+
+
+

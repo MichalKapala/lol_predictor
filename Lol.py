@@ -2,9 +2,7 @@ import urllib.request as request
 import urllib.parse
 import json
 import time
-
-api_key = input("Wprowadź API_KEY: ")
-print(len(api_key))
+api_key = "RGAPI-720b13e5-ded1-4393-893c-641eeea5da96"
 region = "eun1"
 
 
@@ -26,8 +24,9 @@ class Summoner():
     def __init__(self, summonerName):
         self.summonerName = summonerName
 
+
     def get_summoner_by_name(self):
-        url =  "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + str(self.summonerName) + "?api_key=" + api_key
+        url =  "https://" + region + ".api.riotgames.com/lol/summoner/v3/summoners/by-name/" + str(check_nick(self.summonerName)) + "?api_key=" + api_key
         return return_response(url)
 
     def get_summoner_by_summonerId(self, summonerId):
@@ -83,8 +82,8 @@ class Spectacor():
         url = "https://" + region +  ".api.riotgames.com/lol/spectator/v3/active-games/by-summoner/" + str(self.summonerId) + "?api_key=" + api_key
         return return_response(url)
 
-def save_to_file(stats):
-    file = open("learn_data.data", "a")
+def save_to_file(stats, division):
+    file = open("Data/test_data" + str(division) + ".data", "a")
     for i in range(len(stats)):
         if i != len(stats) - 1:
             file.write(str(stats[i]) + " ")
@@ -93,8 +92,8 @@ def save_to_file(stats):
     file.write("\n")
     file.close()
 
-def read_summoners():
-    file = open("Nicki.data", "r")
+def read_summoners(division=None):
+    file = open("Nicki/Nicki_t" + str(division) + ".data", "r")
     summoners = file.readlines()
     nicks = []
     for i in summoners:
@@ -104,7 +103,7 @@ def read_summoners():
     return nicks
 
 
-def main(nick):
+def main(nick, division):
     summoner = Summoner(check_nick(nick))
     summoner_id = summoner.get_stats("accountId", summoner.get_summoner_by_name())
     match = Match(str(summoner_id))
@@ -127,19 +126,19 @@ def main(nick):
         dane.append(1)
         for di in dane:
             dane2.append(str(-1 * di))
-        save_to_file(dane)
-        save_to_file(dane2)
+        save_to_file(dane, division)
+        save_to_file(dane2, division)
 
-        print("Gra: ", match_id)
-        print(dane)
-        time.sleep(1)
+        time.sleep(2)
 
 if __name__ == "__main__":
-    for nick in read_summoners():
-        try:
-            print(nick)
-            main(nick)
-            time.sleep(30)
-        except Exception as error:
-            print(error)
+    for division in range(7, 6, -1):
+
+        for nick in read_summoners(division):
+            try:
+                print(nick)
+                main(nick, division)
+                time.sleep(15)
+            except Exception as error:
+                print(error)
 
