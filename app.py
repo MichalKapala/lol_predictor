@@ -12,8 +12,10 @@ import pandas as pd
 import m_predictor as mp
 import threading
 import sys
-import model as md
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
 import pandas
+
 Config.set("graphics", "width", "400")
 Config.set("graphics", "height", "550")
 Config.set("graphics", "resizable", False)
@@ -100,7 +102,6 @@ class Loading(Screen):
                 self.wynik = self.predict()
             else:
                 Clock.unschedule(self.update)
-                self.predict()
                 if self.wynik:
                     Error(error="Wygra drużyna niebieska", title="Wynik").open()
                 else:
@@ -113,22 +114,34 @@ class Loading(Screen):
             pop.open()
 
     def predict(self):
-        w = pd.read_csv("weights_7.data", sep=" ", header=None)
-        wagi = w.iloc[0, 0:w.shape[1] - 1].values
-        Perceptron = md.Perceptron(0.01, 15, True, wagi)
+        dane = pd.read_csv("Data/learnt_data7.data", sep=" ", header=None)
+        x = dane.iloc[:, :dane.shape[1] - 1].values
+        y_learn = dane.iloc[:, dane.shape[1] - 1].values
+        ss = StandardScaler()
+        ss.fit(x)
+        x_learn_std = ss.transform(x)
+        log = LogisticRegression(C=1000, random_state=0)
+        log.fit(x_learn_std, y_learn)
         roznica = self.Obj.public_stats1 - self.Obj.public_stats2
-        wygrana = Perceptron.predict(roznica)
-        if wygrana == 1:
+        roznica = roznica.reshape(1, -1)
+        wygrana = log.predict(roznica)
+        szansa = log.predict_proba(roznica)
+        print(szansa)
+        self.ids.szansa1.text = "Szansa na wygrana " + str(round(szansa[0][1] * 100,2)) + "%"
+        self.ids.szansa2.text = "Szansa na wygrana " + str(round(szansa[0][0] * 100, 2)) + "%"
+        if wygrana:
             self.ids.l1k.color = (0, 1, 0, 1)
             self.ids.l1d.color = (0, 1, 0, 1)
             self.ids.l1a.color = (0, 1, 0, 1)
             self.ids.l1m.color = (0, 1, 0, 1)
             self.ids.statystyki1.color = (0, 1, 0, 1)
+            self.ids.szansa1.color = (0, 1, 0, 1)
             self.ids.l2k.color = (1, 1, 1, 1)
             self.ids.l2d.color = (1, 1, 1, 1)
             self.ids.l2a.color = (1, 1, 1, 1)
             self.ids.l2m.color = (1, 1, 1, 1)
             self.ids.statystyki2.color = (1, 1, 1, 1)
+            self.ids.szansa2.color = (1, 1, 1, 1)
 
         else:
             self.ids.l2k.color = (0, 1, 0, 1)
@@ -136,11 +149,13 @@ class Loading(Screen):
             self.ids.l2a.color = (0, 1, 0, 1)
             self.ids.l2m.color = (0, 1, 0, 1)
             self.ids.statystyki2.color = (0, 1, 0, 1)
+            self.ids.szansa2.color = (0, 1, 0, 1)
             self.ids.l1k.color = (1, 1, 1, 1)
             self.ids.l1d.color = (1, 1, 1, 1)
             self.ids.l1a.color = (1, 1, 1, 1)
             self.ids.l1m.color = (1, 1, 1, 1)
             self.ids.statystyki1.color = (1, 1, 1, 1)
+            self.ids.szansa1.color = (1, 1, 1, 1)
         return wygrana
     def back(self):
         self.Obj.terminate = True

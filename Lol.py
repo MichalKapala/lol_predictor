@@ -2,7 +2,7 @@ import urllib.request as request
 import urllib.parse
 import json
 import time
-api_key = "RGAPI-720b13e5-ded1-4393-893c-641eeea5da96"
+api_key = "RGAPI-48586eca-d8d5-4e15-8fa8-beee01cc26ee" #Ważny do 04.09.2018 21:00
 region = "eun1"
 
 
@@ -71,6 +71,7 @@ class Match():
                 team_win += player[key]
             else:
                 team_lose += player[key]
+        print(team_win, team_lose, team_win - team_lose)
         return team_win - team_lose
 
 
@@ -83,7 +84,7 @@ class Spectacor():
         return return_response(url)
 
 def save_to_file(stats, division):
-    file = open("Data/test_data" + str(division) + ".data", "a")
+    file = open("Data/learnt_data" + str(division) + ".data", "a")
     for i in range(len(stats)):
         if i != len(stats) - 1:
             file.write(str(stats[i]) + " ")
@@ -93,7 +94,7 @@ def save_to_file(stats, division):
     file.close()
 
 def read_summoners(division=None):
-    file = open("Nicki/Nicki_t" + str(division) + ".data", "r")
+    file = open("Nicki/Nicki" + str(division) + ".data", "r")
     summoners = file.readlines()
     nicks = []
     for i in summoners:
@@ -123,22 +124,24 @@ def main(nick, division):
         dane.append(match.stats(match_stats, "deaths") / game_duration)
         dane.append(match.stats(match_stats, "assists") / game_duration)
         dane.append(match.stats(match_stats, "totalMinionsKilled") / game_duration)
+        for d in range(len(dane)):
+            dane[d] /= 5
         dane.append(1)
         for di in dane:
             dane2.append(str(-1 * di))
+        dane2[len(dane2) - 1] = 0
         save_to_file(dane, division)
         save_to_file(dane2, division)
 
         time.sleep(2)
 
 if __name__ == "__main__":
-    for division in range(7, 6, -1):
-
-        for nick in read_summoners(division):
-            try:
-                print(nick)
-                main(nick, division)
-                time.sleep(15)
-            except Exception as error:
-                print(error)
+    division = 7
+    for nick in read_summoners(division):
+        try:
+            print(nick)
+            main(nick, division)
+            time.sleep(15)
+        except Exception as error:
+            print(error)
 

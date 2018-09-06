@@ -81,10 +81,8 @@ class MainPredictor():
                                     self.two[s] += statystyki[s]
 
                             if iterator_global1 > 0:
-                                print(self.one, iterator_global1)
                                 self.public_stats1 = self.one / iterator_global1
                             if iterator_global2 > 0:
-                                print(self.two, iterator_global2)
                                 self.public_stats2 = self.two / iterator_global2
 
                 if i["teamId"] == 100:
